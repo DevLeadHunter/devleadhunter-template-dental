@@ -53,9 +53,17 @@ const themeVars = computed(() => ({
   '--color-accent': page.value.theme.accent,
 }))
 
+/** Favicon prospect si logo enrichi, sinon asset template par défaut. */
+const faviconHref = computed((): string => {
+  const logo = typeof props.content.logo === 'string' ? props.content.logo.trim() : ''
+  return logo.length > 0 ? logo : '/favicon.png'
+})
+
 useHead({
   title: () => page.value.businessName,
   link: [
+    { key: 'dental-favicon', rel: 'icon', type: 'image/png', href: faviconHref },
+    { key: 'dental-apple-touch-icon', rel: 'apple-touch-icon', href: faviconHref },
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
     {
