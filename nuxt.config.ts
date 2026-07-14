@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       // Only the root component is auto-registered globally (demo-host dispatches to it
       // by name). Sections are imported RELATIVELY by the root and ignored here, so two
       // templates can each have a HeroSection without colliding in demo-host's registry.
-      ignore: ['**/sections/**'],
+      ignore: ['**/sections/**', '**/layout/**'],
     },
   ],
 

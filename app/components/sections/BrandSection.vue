@@ -17,7 +17,12 @@
 </template>
 
 <script lang="ts" setup>
-import { brand } from '../../data/site'
+import type { PropType } from 'vue'
+import type { DentalPageContent } from '../../types/dental'
+
+defineProps({
+  brand: { type: Object as PropType<DentalPageContent['brand']>, required: true },
+})
 </script>
 
 <style scoped>

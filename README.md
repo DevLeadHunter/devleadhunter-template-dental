@@ -4,38 +4,41 @@ Nuxt 4 layer template for **Family Dental Care** — a one-page dental clinic la
 (El Messiri + Nunito, red/beige palette) consumed by `demo-host` via `extends`.
 
 > Architecture reference: `TEMPLATES_ARCHITECTURE.md` in the main `devleadhunter` repo.
-> Content is **hardcoded** in `app/data/site.ts` for now (no SiteContent CMS wiring yet).
+> Content is driven by flat **`SiteContent`** (`@devleadhunter/website-content`).
+> Storyblok uses the shared `site_content` blok family (no per-template schemas).
 
 ## Local development
 
 ```bash
 npm install
-npm run dev        # http://localhost:3000 — .playground one-page preview
+npm run dev        # http://localhost:3000 — .playground with mockSiteContent
 npm run lint       # prettier + eslint + vue-tsc
 npm run build      # builds the .playground in isolation
 ```
+
+Edit `content.ts` to simulate prospect/enrichment data.
 
 ## Structure
 
 ```
 app/
-├── assets/css/template.css       # Design tokens, container-dental, btn-dental
+├── assets/css/template.css
 ├── components/
-│   ├── DentalRoot.vue            # Layer root (sections only, for demo-host)
-│   ├── layout/                   # SiteHeader, SiteFooter
+│   ├── DentalRoot.vue            # Layer root (:content SiteContent) — demo-host entry
+│   ├── layout/                   # SiteHeader, SiteFooter (relative imports only)
 │   └── sections/                 # Hero, Featured, Services, About, Team, Brand, CTA
-├── data/site.ts                  # Hardcoded Pencil content
-└── types/SiteContent.ts          # Future CMS contract
-.playground/                      # Local preview (layout + index page)
+├── types/
+│   ├── SiteContent.ts            # Re-export from @devleadhunter/website-content
+│   └── dental.ts                 # buildDentalContent() + page types
+└── data/site.ts                  # Legacy Pencil snapshot (unused by root)
+content.ts                        # Playground mock SiteContent
+public/                           # Images + Pencil exports (merged into demo-host)
+.playground/                      # Local preview
 ```
 
-## Design source
+## demo-host / API
 
-Pencil maquette at 1440px — page fill `#f9f7f4`, brand `#b1040e`, accent `#80060d`,
-ink `#2e333e`. Images in `.playground/public/images/`, icon exports in
-`.playground/public/exports/`.
-
-## demo-host integration (later)
-
-Rename dispatch target to `DentalRoot`, wire `SiteContent` props, register
-`devleadhunter-template-dental` in the API template registry, tag `v1.0.0`.
+- `template_id`: `dental`
+- Root: `DentalRoot`
+- API module: `api/services/templates/dental.py`
+- Preview: `http://localhost:3001/preview-layers?t=dental`

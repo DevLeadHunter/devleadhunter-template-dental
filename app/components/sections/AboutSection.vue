@@ -9,7 +9,7 @@
         height="169"
         aria-hidden="true" />
       <div
-        v-for="row in aboutRows"
+        v-for="row in rows"
         :key="row.eyebrow"
         class="about-section__row"
         :class="{ 'about-section__row--reverse': !row.imageFirst }">
@@ -68,7 +68,12 @@
 </template>
 
 <script lang="ts" setup>
-import { aboutRows } from '../../data/site'
+import type { PropType } from 'vue'
+import type { DentalAboutRow } from '../../types/dental'
+
+defineProps({
+  rows: { type: Array as PropType<DentalAboutRow[]>, required: true },
+})
 </script>
 
 <style scoped>

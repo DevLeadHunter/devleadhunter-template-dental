@@ -45,7 +45,12 @@
 </template>
 
 <script lang="ts" setup>
-import { featured } from '../../data/site'
+import type { PropType } from 'vue'
+import type { DentalPageContent } from '../../types/dental'
+
+defineProps({
+  featured: { type: Object as PropType<DentalPageContent['featured']>, required: true },
+})
 </script>
 
 <style scoped>

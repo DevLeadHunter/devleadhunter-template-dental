@@ -93,10 +93,15 @@
 </template>
 
 <script lang="ts" setup>
-import { cta } from '../../data/site'
+import type { PropType } from 'vue'
+import type { DentalPageContent } from '../../types/dental'
+
+const props = defineProps({
+  cta: { type: Object as PropType<DentalPageContent['cta']>, required: true },
+})
 
 function onSubmit(): void {
-  window.location.href = `mailto:${cta.contacts[1]?.value ?? 'contact@example.com'}`
+  window.location.href = `mailto:${props.cta.contacts[1]?.value ?? 'contact@example.com'}`
 }
 </script>
 

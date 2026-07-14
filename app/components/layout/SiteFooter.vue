@@ -1,14 +1,14 @@
 <template>
   <footer class="dental-footer">
     <div class="dental-footer__inner">
-      <p class="dental-footer__copy">{{ site.copyright }}</p>
+      <p class="dental-footer__copy">{{ page.copyright }}</p>
       <div
         class="dental-footer__social"
         aria-label="Social links">
         <a
-          v-for="icon in socialIcons"
+          v-for="icon in page.social"
           :key="icon.label"
-          href="#"
+          :href="icon.href"
           class="dental-footer__social-link"
           :aria-label="icon.label">
           <img
@@ -25,15 +25,12 @@
 </template>
 
 <script lang="ts" setup>
-import { site } from '../../data/site'
+import type { PropType } from 'vue'
+import type { DentalPageContent } from '../../types/dental'
 
-const socialIcons = [
-  { label: 'Facebook', src: '/exports/H9JZK.png' },
-  { label: 'Twitter', src: '/exports/c52F3x.png' },
-  { label: 'Instagram', src: '/exports/zPb6s.png' },
-  { label: 'LinkedIn', src: '/exports/ToOF0.png' },
-  { label: 'YouTube', src: '/exports/bS49m.png' },
-]
+defineProps({
+  page: { type: Object as PropType<DentalPageContent>, required: true },
+})
 </script>
 
 <style scoped>

@@ -4,7 +4,7 @@
       <a
         href="#"
         class="dental-header__brand"
-        aria-label="Family Dental Care home">
+        :aria-label="`${page.businessName} home`">
         <img
           src="/exports/q1xDL.png"
           alt=""
@@ -12,21 +12,21 @@
           width="36"
           height="42" />
         <span class="dental-header__wordmark">
-          <span class="dental-header__name">{{ site.name }}</span>
-          <span class="dental-header__tagline">{{ site.tagline }}</span>
+          <span class="dental-header__name">{{ page.businessName }}</span>
+          <span class="dental-header__tagline">{{ page.tagline }}</span>
         </span>
       </a>
 
       <a
         class="dental-header__phone-mobile"
-        :href="`tel:${site.phone.replace(/\s/g, '')}`">
+        :href="`tel:${page.phone.replace(/\s/g, '')}`">
         <img
           src="/exports/VfJQY.png"
           alt=""
           width="16"
           height="16"
           aria-hidden="true" />
-        {{ site.phone }}
+        {{ page.phoneDisplay }}
       </a>
 
       <div class="dental-header__contacts">
@@ -49,22 +49,28 @@
 </template>
 
 <script lang="ts" setup>
-import { site } from '../../data/site'
+import { computed } from 'vue'
+import type { PropType } from 'vue'
+import type { DentalPageContent } from '../../types/dental'
 
-const contactItems = [
+const props = defineProps({
+  page: { type: Object as PropType<DentalPageContent>, required: true },
+})
+
+const contactItems = computed(() => [
   {
-    label: site.address,
+    label: props.page.address,
     icon: '/exports/e1KB3.png',
   },
   {
-    label: site.hours,
+    label: props.page.hours,
     icon: '/exports/r1VdXw.png',
   },
   {
-    label: site.phone,
+    label: props.page.phoneDisplay,
     icon: '/exports/VfJQY.png',
   },
-]
+])
 </script>
 
 <style scoped>

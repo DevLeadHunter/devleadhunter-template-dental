@@ -32,7 +32,12 @@
 </template>
 
 <script lang="ts" setup>
-import { team } from '../../data/site'
+import type { PropType } from 'vue'
+import type { DentalPageContent } from '../../types/dental'
+
+defineProps({
+  team: { type: Object as PropType<DentalPageContent['team']>, required: true },
+})
 </script>
 
 <style scoped>
