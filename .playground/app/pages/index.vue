@@ -3,6 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import DentalRoot from '../../app/components/DentalRoot.vue'
-import { mockSiteContent } from '../../content'
+import DentalRoot from '../../../app/components/DentalRoot.vue'
+import { mockSiteContent } from '../../../content'
 </script>
