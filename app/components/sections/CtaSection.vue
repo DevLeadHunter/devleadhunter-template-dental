@@ -118,9 +118,9 @@ function onSubmit(): void {
 .cta-section__squiggle {
   display: none;
   position: absolute;
-  /* Export has transparent padding; scale up so the stroke matches Pencil ~176px */
-  left: -36px;
-  top: -100px;
+  /* Export has transparent padding; nudge up/left away from the heading */
+  left: -96px;
+  top: -150px;
   width: 300px;
   height: auto;
   pointer-events: none;
