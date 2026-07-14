@@ -100,7 +100,7 @@ defineProps({
   padding: 22px 28px;
   border-radius: 10px;
   background: #ffffff;
-  border: 1px solid #b1040e;
+  border: 1px solid var(--color-brand, #b1040e);
   border-bottom-width: 4px;
   box-sizing: border-box;
   text-align: center;
@@ -121,7 +121,7 @@ defineProps({
 
 .team-section__role {
   margin: 0;
-  color: #b1040e;
+  color: var(--color-brand, #b1040e);
   font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
   font-size: 14px;
   letter-spacing: 0.7px;

@@ -4,13 +4,11 @@
       <a
         href="#"
         class="dental-header__brand"
-        :aria-label="`${page.businessName} home`">
-        <img
-          src="/exports/q1xDL.png"
-          alt=""
-          class="dental-header__logo"
-          width="36"
-          height="42" />
+        :aria-label="`${page.businessName} — accueil`">
+        <span
+          class="dental-brand-mask dental-header__logo"
+          :style="maskStyle('/exports/q1xDL.png')"
+          aria-hidden="true" />
         <span class="dental-header__wordmark">
           <span class="dental-header__name">{{ page.businessName }}</span>
           <span class="dental-header__tagline">{{ page.tagline }}</span>
@@ -20,11 +18,9 @@
       <a
         class="dental-header__phone-mobile"
         :href="`tel:${page.phone.replace(/\s/g, '')}`">
-        <img
-          src="/exports/VfJQY.png"
-          alt=""
-          width="16"
-          height="16"
+        <span
+          class="dental-brand-mask dental-header__phone-icon"
+          :style="maskStyle('/exports/VfJQY.png')"
           aria-hidden="true" />
         {{ page.phoneDisplay }}
       </a>
@@ -34,12 +30,9 @@
           v-for="item in contactItems"
           :key="item.label"
           class="dental-header__contact">
-          <img
-            :src="item.icon"
-            alt=""
-            class="dental-header__icon-img"
-            width="18"
-            height="18"
+          <span
+            class="dental-brand-mask dental-header__icon"
+            :style="maskStyle(item.icon)"
             aria-hidden="true" />
           <span class="dental-header__contact-text">{{ item.label }}</span>
         </div>
@@ -71,6 +64,17 @@ const contactItems = computed(() => [
     icon: '/exports/VfJQY.png',
   },
 ])
+
+/**
+ * Style mask for brand-tinted PNG assets.
+ * @param src Asset URL
+ */
+function maskStyle(src: string): Record<string, string> {
+  return {
+    maskImage: `url(${src})`,
+    WebkitMaskImage: `url(${src})`,
+  }
+}
 </script>
 
 <style scoped>
@@ -102,10 +106,8 @@ const contactItems = computed(() => [
 }
 
 .dental-header__logo {
-  flex-shrink: 0;
   width: 36px;
   height: 42px;
-  object-fit: contain;
 }
 
 .dental-header__wordmark {
@@ -116,7 +118,7 @@ const contactItems = computed(() => [
 }
 
 .dental-header__name {
-  color: #2e333e;
+  color: var(--color-ink, #2e333e);
   font-family: 'El Messiri', Georgia, serif;
   font-size: 20px;
   font-weight: 400;
@@ -124,7 +126,7 @@ const contactItems = computed(() => [
 }
 
 .dental-header__tagline {
-  color: #b1040e;
+  color: var(--color-brand, #b1040e);
   font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -153,10 +155,9 @@ const contactItems = computed(() => [
   letter-spacing: 0.3px;
 }
 
-.dental-header__phone-mobile img {
+.dental-header__phone-icon {
   width: 16px;
   height: 16px;
-  object-fit: contain;
 }
 
 .dental-header__contact {
@@ -167,11 +168,9 @@ const contactItems = computed(() => [
   min-width: 0;
 }
 
-.dental-header__icon-img {
-  flex-shrink: 0;
+.dental-header__icon {
   width: 18px;
   height: 18px;
-  object-fit: contain;
 }
 
 .dental-header__contact-text {

@@ -1,8 +1,8 @@
 /**
- * Types + construction du contenu de la template `dental` (« Family Dental Care »).
+ * Types + construction du contenu de la template `dental`.
  *
- * La template rend un `SiteContent` typé et possède sa DA / copie éditoriale dentaire
- * en défauts (Pencil). Clés SiteContent vides → fallback template.
+ * Copie éditoriale FR (cible France). Clés SiteContent vides → fallback template.
+ * Pas de lorem / pas de logos d’assurance factices / réseaux sociaux seulement si fournis.
  */
 import type { SiteContent } from './SiteContent'
 
@@ -47,6 +47,7 @@ export interface DentalAboutRow {
   heading: string
   paragraphs: string[]
   cta: string
+  ctaHref: string
   image: string
   imageFirst: boolean
 }
@@ -121,6 +122,7 @@ export interface DentalPageContent {
   cta: {
     heading: string
     subheading: string
+    mailtoEmail: string
     contacts: DentalContactItem[]
     form: {
       nameLabel: string
@@ -134,6 +136,7 @@ export interface DentalPageContent {
       messageLabel: string
       messagePlaceholder: string
       submit: string
+      subject: string
     }
   }
 }
@@ -146,35 +149,43 @@ const SERVICE_FALLBACK_IMAGES = [
   '/images/image-import-15.jpg',
 ] as const
 
+const SOCIAL_ICON_BY_NETWORK: Record<string, string> = {
+  facebook: '/exports/H9JZK.png',
+  twitter: '/exports/c52F3x.png',
+  x: '/exports/c52F3x.png',
+  instagram: '/exports/zPb6s.png',
+  linkedin: '/exports/ToOF0.png',
+  youtube: '/exports/bS49m.png',
+}
+
 const defaults = {
-  tagline: 'Dentistry and Orthodontics',
-  heroHeading: 'Local dentists who love to make you smile.',
-  heroSubheading: 'Discover a level of dental care like no other',
-  heroBadge: 'FAMILY DENTAL CARE',
-  ctaPrimary: 'Book an Appointment',
-  ctaSecondary: 'Browse our service',
+  tagline: 'Dentisterie et orthodontie',
+  heroHeading: 'Des dentistes de proximité qui aiment vous faire sourire.',
+  heroSubheading: 'Découvrez une prise en charge dentaire attentive et moderne.',
+  heroBadge: 'CABINET DENTAIRE',
+  ctaPrimary: 'Prendre rendez-vous',
+  ctaSecondary: 'Voir nos soins',
   heroImage: '/images/image-import-7.png',
   features: [
     {
       icon: '/exports/DqRcy.png',
-      title: 'Preventive Guidance',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit velit, sapien habitant integer sen.facilisis ex non nibh',
+      title: 'Prévention',
+      text: 'Contrôles réguliers, conseils d’hygiène et suivi personnalisé pour éviter les soins lourds.',
     },
     {
       icon: '/exports/dCWWe.png',
-      title: 'Friendly Service',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit velit, sapien habitant integer sen.facilisis ex non nibh',
+      title: 'Accueil bienveillant',
+      text: 'Une équipe à l’écoute, des explications claires et un rythme adapté à chaque patient.',
     },
     {
       icon: '/exports/wNoa7.png',
-      title: 'Dental Technology',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit velit, sapien habitant integer sen.facilisis ex non nibh',
+      title: 'Technologies modernes',
+      text: 'Matériel à jour pour des diagnostics précis et des soins plus confortables.',
     },
   ] as DentalFeatureItem[],
-  featuredEyebrow: 'WELCOME TO OUR FAMILY DENTAL CARE',
-  featuredHeading: 'Creating beautiful smiles for all ages',
+  featuredHeading: 'Des sourires pour tous les âges',
   featuredBody:
-    'We are a family dental practice that has earned the trust of our patients through honesty, efficiency, and good communication.',
+    'Cabinet familial de confiance : transparence, efficacité et une communication claire à chaque étape du parcours de soins.',
   featuredImages: [
     { src: '/images/image-import-1.jpg', offset: 'low' as const },
     { src: '/images/image-import-19.jpg', offset: 'high' as const },
@@ -182,128 +193,121 @@ const defaults = {
     { src: '/images/image-import-9.jpg', offset: 'high' as const },
   ],
   stats: [
-    { value: '20', label: 'Years Of Experience', inkDark: true },
-    { value: '200', label: 'Satisfied Clients', inkDark: false },
-    { value: '20', label: 'Certified Dentist', inkDark: false },
+    { value: '20', label: "Ans d'expérience", inkDark: true },
+    { value: '2000', label: 'Patients suivis', inkDark: false },
+    { value: '5', label: 'Praticiens', inkDark: false },
   ] as DentalStatItem[],
-  servicesEyebrow: 'OUR SERVICES',
-  servicesHeading: 'Quality dental services',
+  servicesEyebrow: 'NOS SOINS',
+  servicesHeading: 'Des soins dentaires de qualité',
   servicesBody:
-    'Our dentists provide a range of services to all ages and needs to keep their teeth and gums healthy for life',
+    'Nous accompagnons petits et grands pour des dents et des gencives saines, tout au long de la vie.',
   serviceCards: [
     {
-      title: 'General Dentistry',
+      title: 'Dentisterie générale',
       image: '/images/image-import-11.jpg',
-      description:
-        'Our general dentistry services include a range of preventative and targeted treatments essential for maintaining healthy teeth and gums.',
+      description: 'Contrôles, détartrage, soins cariés et suivi préventif pour toute la famille.',
       pills: [
-        'Fillings',
-        'Examination, scale & clean',
-        "Children's dentistry",
-        'Gum disease',
-        'Root canal therapy',
-        'Wisdom teeth',
-        'Mouthguards',
+        'Obturations',
+        'Détartrage & contrôle',
+        'Soins enfants',
+        'Parodontologie',
+        'Traitement de canal',
+        'Dents de sagesse',
+        'Gouttières',
       ],
     },
     {
-      title: 'Dental Cosmetic',
+      title: 'Esthétique du sourire',
       image: '/images/image-import-18.jpg',
       description:
-        'We know the first thing people notice about you is your smile, We deliver incredible cosmetic results that will have you smiling with confidence.',
-      pills: ['Teeth whitening', 'Crowns', 'Veneers', 'Implants', 'Invisalign'],
+        'Blanchiment, facettes, couronnes et aligneurs : des résultats naturels pour sourire en confiance.',
+      pills: ['Blanchiment', 'Couronnes', 'Facettes', 'Implants', 'Aligneurs'],
     },
     {
-      title: 'Emergency Care',
+      title: 'Urgences dentaires',
       image: '/images/image-import-15.jpg',
       description:
-        'We provides emergency dental services if you have knocked out a tooth or are experiencing a severe toothache, do not delay seeking medical treatment.',
-      pills: ['Severe toothaches', 'Bleeding gums', 'Broken teeth', 'Sports trauma'],
+        'Douleur, dent cassée ou abcès : contactez-nous rapidement, nous organisons un créneau prioritaire.',
+      pills: ['Douleurs sévères', 'Saignements', 'Dent cassée', 'Traumatismes'],
     },
   ] as DentalServiceCard[],
-  aboutHeading: 'Your smile is our pride',
+  aboutHeading: 'Votre sourire, notre fierté',
   aboutParagraphs: [
-    'We know the first thing people notice about you is smile, our expertise and experience, combined with technologies, We will ensure you have healthy, beautiful smiles',
-    'Sed sollicitudin pellentesque urna, a suscipit metus imperdiet et. Curabitur consectetur auctor leo eu posuere. Fusce maximus purus ac enim tempor, eu consequat purus laoreet. Suspendisse elementum ligula vitae gravida aliquet.',
+    'Expertise, expérience et technologies modernes : nous veillons à des sourires sains et durables.',
+    'Chaque plan de soins est expliqué simplement, avec des options adaptées à vos besoins et à votre budget.',
   ],
   aboutImage: '/images/image-import-14.jpg',
   aboutRows: [
     {
-      eyebrow: 'ABOUT US',
-      heading: 'Your smile is our pride',
+      eyebrow: 'À PROPOS',
+      heading: 'Votre sourire, notre fierté',
       paragraphs: [
-        'We know the first thing people notice about you is smile, our expertise and experience, combined with technologies, We will ensure you have healthy, beautiful smiles',
-        'Sed sollicitudin pellentesque urna, a suscipit metus imperdiet et. Curabitur consectetur auctor leo eu posuere. Fusce maximus purus ac enim tempor, eu consequat purus laoreet. Suspendisse elementum ligula vitae gravida aliquet.',
+        'Expertise, expérience et technologies modernes : nous veillons à des sourires sains et durables.',
+        'Chaque plan de soins est expliqué simplement, avec des options adaptées à vos besoins et à votre budget.',
       ],
-      cta: 'Learn More',
+      cta: 'Nos soins',
+      ctaHref: '#services',
       image: '/images/image-import-14.jpg',
       imageFirst: true,
     },
     {
-      eyebrow: 'NEW PATIENTS',
-      heading: 'We accept new patients',
+      eyebrow: 'NOUVEAUX PATIENTS',
+      heading: 'Nous accueillons les nouveaux patients',
       paragraphs: [
-        'We are highly skilled in treating a wide range of dental concerns, and take pride in delivering outstanding patient care and exceptional results every time.',
-        'Sed sollicitudin pellentesque urna, a suscipit metus imperdiet et. Curabitur consectetur auctor leo eu posuere. Fusce maximus purus ac enim tempor, eu consequat purus laoreet. Suspendisse elementum ligula vitae gravida aliquet.',
+        'Bilan complet, écoute et plan de traitement clair : nous vous accompagnons dès la première visite.',
+        'Que ce soit pour un suivi familial ou une urgence, notre équipe s’organise pour vous recevoir rapidement.',
       ],
-      cta: 'Learn More',
+      cta: 'Nos soins',
+      ctaHref: '#services',
       image: '/images/image-import-9.png',
       imageFirst: false,
     },
   ] as DentalAboutRow[],
   team: {
-    eyebrow: 'THE PROFESSIONAL BEHIND YOUR SMILE',
-    heading: 'Meet your neighborhood dentists',
-    body: "We are excited to be your neighborhood dentist and take care of your family's dental needs.",
+    eyebrow: 'LES PROFESSIONNELS DERRIÈRE VOTRE SOURIRE',
+    heading: 'Votre équipe soignante',
+    body: 'Des praticiens de proximité, engagés pour la santé bucco-dentaire de toute la famille.',
     members: [
       {
-        name: 'Maria',
-        role: 'BDS ( GENERAL DENTIST)',
-        bio: 'Quisque sed ex sed risus pellentesque pellentesque id nec purusestibulum',
+        name: 'Dr Sophie Martin',
+        role: 'CHIRURGIEN-DENTISTE',
+        bio: 'Soins familiaux, prévention et accompagnement au long cours.',
         image: '/images/image-import-4.jpg',
       },
       {
-        name: 'Darla',
-        role: 'BDS ( GENERAL DENTIST)',
-        bio: 'Quisque sed ex sed risus pellentesque pellentesque id nec purusestibulum',
+        name: 'Dr Marc Lefèvre',
+        role: 'CHIRURGIEN-DENTISTE',
+        bio: 'Esthétique du sourire, couronnes et réhabilitation implantaire.',
         image: '/images/image-import-2.jpg',
       },
       {
-        name: 'Josh',
-        role: 'BDS ( GENERAL DENTIST)',
-        bio: 'Quisque sed ex sed risus pellentesque pellentesque id nec purusestibulum',
+        name: 'Dr Amina Benali',
+        role: 'CHIRURGIEN-DENTISTE',
+        bio: 'Soins pédiatriques et premier contact en douceur pour les enfants.',
         image: '/images/image-import.jpg',
       },
     ],
   },
-  brand: {
-    heading: 'We accept your insurance',
-    logos: [
-      '/images/image-import-4.png',
-      '/images/image-import-8.png',
-      '/images/image-import-5.png',
-      '/images/image-import-2.png',
-      '/images/image-import-2.png',
-      '/images/image-import-4.png',
-    ],
-  },
-  contactHeading: 'Book Appointment',
+  brandHeading: 'Nous acceptons votre mutuelle',
+  contactHeading: 'Prendre rendez-vous',
   contactSubheading:
-    'Schedule your next dental appointment effortlessly, We will contact you to confirm your request or change the time or day if unavailable.',
-  hours: 'Office Hour: 08:00am - 6:00pm',
+    'Indiquez vos disponibilités : nous vous recontactons pour confirmer le créneau ou proposer un autre horaire.',
+  hours: 'Horaires : 08:30 – 19:00',
 } as const
 
 /**
  * @param value Texte optionnel
  * @param fallback Défaut template
+ * @returns Texte à afficher
  */
 function resolveText(value: string | undefined, fallback: string): string {
   return typeof value === 'string' && value.trim().length > 0 ? value : fallback
 }
 
 /**
- * Formate un téléphone pour l'affichage (fallback = valeur brute).
+ * Formate un téléphone FR pour l'affichage.
  * @param phone Numéro brut
+ * @returns Téléphone formaté
  */
 function formatPhoneDisplay(phone: string): string {
   const digits = phone.replace(/\D/g, '')
@@ -314,24 +318,33 @@ function formatPhoneDisplay(phone: string): string {
 }
 
 /**
+ * @param network Nom du réseau social
+ * @returns Chemin icône connue ou vide
+ */
+function socialIconFor(network: string): string {
+  const key = network.trim().toLowerCase()
+  return SOCIAL_ICON_BY_NETWORK[key] ?? ''
+}
+
+/**
  * Construit le contenu de page prêt pour le rendu.
  * @param content Données variables du prospect (`SiteContent`)
+ * @returns Contenu typé Dental
  */
 export function buildDentalContent(content: SiteContent): DentalPageContent {
   const palette = content.palette ?? {}
-  const businessName = resolveText(content.businessName, 'Family Dental Care')
+  const businessName = resolveText(content.businessName, 'Cabinet Dentaire')
   const city = resolveText(content.city, '')
   const area = resolveText(content.area, city)
-  const phone = resolveText(content.phone, '123 456 7890')
-  const email = resolveText(content.email, 'contact@example.com')
+  const phone = resolveText(content.phone, '01 00 00 00 00')
+  const email = resolveText(content.email, 'contact@cabinet-dentaire.fr')
   const address =
-    [area || city, city && area !== city ? city : ''].filter(Boolean).join(', ') ||
-    'Cooks Mill Rd, Halifax NS, Canada'
+    [area || city, city && area !== city ? city : ''].filter(Boolean).join(', ') || 'France'
 
   const hoursFromContent =
     Array.isArray(content.openingHours) && content.openingHours.length > 0
       ? content.openingHours
-          .map((row) => [row.day, row.hours].filter(Boolean).join(': '))
+          .map((row) => [row.day, row.hours].filter(Boolean).join(' : '))
           .filter((row) => row.length > 0)
           .slice(0, 1)[0]
       : undefined
@@ -409,20 +422,22 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
       heading: resolveText(content.aboutHeading, defaults.aboutHeading),
       paragraphs: [aboutText, defaults.aboutParagraphs[1]],
       image: resolveText(content.aboutImage, defaults.aboutImage),
-      cta: resolveText(content.ctaQuoteLabel, defaults.aboutRows[0].cta),
+      cta: 'Nos soins',
+      ctaHref: '#services',
     },
     {
       ...defaults.aboutRows[1],
       image: galleryUrls[1] || galleryUrls[0] || defaults.aboutRows[1].image,
-      cta: resolveText(content.ctaQuoteLabel, defaults.aboutRows[1].cta),
+      cta: 'Nos soins',
+      ctaHref: '#services',
     },
   ]
 
   const teamMembers: DentalTeamMember[] =
     Array.isArray(content.reviews) && content.reviews.length >= 3
       ? content.reviews.slice(0, 3).map((review, index) => ({
-          name: review.author || defaults.team.members[index]?.name || 'Dentist',
-          role: defaults.team.members[index]?.role || 'BDS ( GENERAL DENTIST)',
+          name: review.author || defaults.team.members[index]?.name || 'Praticien',
+          role: defaults.team.members[index]?.role || 'CHIRURGIEN-DENTISTE',
           bio: review.text || defaults.team.members[index]?.bio || '',
           image:
             galleryUrls[index] ||
@@ -431,22 +446,26 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
         }))
       : [...defaults.team.members]
 
-  const socialDefaults: DentalSocialLink[] = [
-    { label: 'Facebook', src: '/exports/H9JZK.png', href: '#' },
-    { label: 'Twitter', src: '/exports/c52F3x.png', href: '#' },
-    { label: 'Instagram', src: '/exports/zPb6s.png', href: '#' },
-    { label: 'LinkedIn', src: '/exports/ToOF0.png', href: '#' },
-    { label: 'YouTube', src: '/exports/bS49m.png', href: '#' },
-  ]
+  // Pas de logos mutuelle dans SiteContent → section masquée tant qu’aucune donnée réelle.
+  const brandLogos: string[] = []
 
   const social: DentalSocialLink[] =
     Array.isArray(content.social) && content.social.length > 0
-      ? content.social.map((item, index) => ({
-          label: item.network || socialDefaults[index]?.label || 'Social',
-          src: socialDefaults[index]?.src || socialDefaults[0].src,
-          href: item.url || '#',
-        }))
-      : socialDefaults
+      ? content.social
+          .map((item) => {
+            const label = (item.network || '').trim()
+            const href = (item.url || '').trim()
+            const src = socialIconFor(label)
+            return { label, href, src }
+          })
+          .filter(
+            (item) =>
+              item.label.length > 0 &&
+              item.href.length > 0 &&
+              item.href !== '#' &&
+              item.src.length > 0,
+          )
+      : []
 
   const year = new Date().getFullYear()
 
@@ -462,8 +481,8 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
     phoneDisplay: formatPhoneDisplay(phone),
     email,
     address,
-    hours: hoursFromContent ? `Office Hour: ${hoursFromContent}` : defaults.hours,
-    copyright: `© ${year} ${businessName}. All rights reserved.`,
+    hours: hoursFromContent ? `Horaires : ${hoursFromContent}` : defaults.hours,
+    copyright: `© ${year} ${businessName}. Tous droits réservés.`,
     social,
     hero: {
       eyebrow: resolveText(content.heroBadge, businessName.toUpperCase()),
@@ -476,7 +495,7 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
       features,
     },
     featured: {
-      eyebrow: `WELCOME TO ${businessName.toUpperCase()}`,
+      eyebrow: `BIENVENUE CHEZ ${businessName.toUpperCase()}`,
       heading: resolveText(content.galleryHeading, defaults.featuredHeading),
       body: resolveText(content.about, defaults.featuredBody),
       line: '/exports/W25rs.png',
@@ -495,45 +514,50 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
       heading: resolveText(content.reviewsHeading, defaults.team.heading),
       members: teamMembers,
     },
-    brand: { ...defaults.brand },
+    brand: {
+      heading: defaults.brandHeading,
+      logos: brandLogos,
+    },
     cta: {
       heading: resolveText(content.contactHeading, defaults.contactHeading),
       subheading: defaults.contactSubheading,
+      mailtoEmail: email,
       contacts: [
         {
-          title: 'Give us a call',
-          description: 'Lorem ipsum dolor sit amet  sit dignissim pellentesque',
+          title: 'Appelez-nous',
+          description: 'Un créneau urgent ou une question ? Notre secrétariat vous répond.',
           value: formatPhoneDisplay(phone),
           href: `tel:${phone.replace(/\s/g, '')}`,
           icon: '/exports/xUErL.png',
         },
         {
-          title: 'Send us an email',
-          description: 'Lorem ipsum dolor sit amet  sit dignissim pellentesque',
+          title: 'Écrivez-nous',
+          description: 'Décrivez votre besoin : nous revenons vers vous rapidement.',
           value: email,
           href: `mailto:${email}`,
           icon: '/exports/v4v2w.png',
         },
         {
-          title: 'Visit to clinic',
-          description: 'Lorem ipsum dolor sit amet  sit dignissim pellentesque',
+          title: 'Venez au cabinet',
+          description: 'Un accueil simple et clair, proche de chez vous.',
           value: address,
           href: '#',
           icon: '/exports/D9Q8eS.png',
         },
       ],
       form: {
-        nameLabel: 'Name',
-        namePlaceholder: 'Full Name',
-        emailLabel: 'Email Address',
-        emailPlaceholder: 'email@example.com',
-        phoneLabel: 'Phone Number',
-        phonePlaceholder: '(123) 456 7890',
-        serviceLabel: 'Service',
-        servicePlaceholder: 'Ex. Dental Implants',
+        nameLabel: 'Nom',
+        namePlaceholder: 'Prénom Nom',
+        emailLabel: 'Adresse e-mail',
+        emailPlaceholder: 'email@exemple.fr',
+        phoneLabel: 'Téléphone',
+        phonePlaceholder: '06 12 34 56 78',
+        serviceLabel: 'Soin souhaité',
+        servicePlaceholder: 'Ex. Contrôle, blanchiment…',
         messageLabel: 'Message',
-        messagePlaceholder: 'Please describe what service you are interested in',
-        submit: 'Submit',
+        messagePlaceholder: 'Décrivez votre besoin ou vos disponibilités',
+        submit: 'Envoyer',
+        subject: `Demande de rendez-vous — ${businessName}`,
       },
     },
   }

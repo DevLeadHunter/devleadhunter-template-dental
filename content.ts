@@ -90,8 +90,6 @@ export const mockSiteContent: SiteContent = {
   ],
   openingHours: [{ day: 'Lun–Ven', hours: '08:30 – 19:00' }],
   zones: ['Lyon 3e', 'Villeurbanne', 'Bron', 'Vaulx-en-Velin'],
-  social: [
-    { network: 'Facebook', url: 'https://facebook.com' },
-    { network: 'Instagram', url: 'https://instagram.com' },
-  ],
+  // Pas de réseaux factices : le footer n’affiche les icônes que si URL réelles.
+  social: [],
 }

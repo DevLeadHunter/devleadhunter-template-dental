@@ -8,10 +8,9 @@
       </div>
 
       <div class="featured-section__gallery">
-        <img
-          :src="featured.line"
-          alt=""
-          class="featured-section__line"
+        <span
+          class="dental-brand-mask featured-section__line"
+          :style="maskStyle(featured.line)"
           aria-hidden="true" />
         <img
           v-for="(img, i) in featured.images"
@@ -51,6 +50,17 @@ import type { DentalPageContent } from '../../types/dental'
 defineProps({
   featured: { type: Object as PropType<DentalPageContent['featured']>, required: true },
 })
+
+/**
+ * Style mask for brand-tinted PNG assets.
+ * @param src Asset URL
+ */
+function maskStyle(src: string): Record<string, string> {
+  return {
+    maskImage: `url(${src})`,
+    WebkitMaskImage: `url(${src})`,
+  }
+}
 </script>
 
 <style scoped>
@@ -108,7 +118,7 @@ defineProps({
   transform: translate(-50%, -50%);
   width: 76%;
   max-width: 896px;
-  height: auto;
+  height: clamp(48px, 8vw, 96px);
   pointer-events: none;
   z-index: 0;
 }

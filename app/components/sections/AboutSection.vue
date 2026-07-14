@@ -1,12 +1,9 @@
 <template>
   <section class="about-section">
     <div class="container-dental about-section__inner">
-      <img
-        src="/exports/VqwYC.png"
-        alt=""
-        class="about-section__squiggle"
-        width="214"
-        height="169"
+      <span
+        class="dental-brand-mask about-section__squiggle"
+        :style="maskStyle('/exports/VqwYC.png')"
         aria-hidden="true" />
       <div
         v-for="row in rows"
@@ -41,7 +38,7 @@
             {{ para }}
           </p>
           <a
-            href="#"
+            :href="row.ctaHref"
             class="btn-dental btn-dental--outline about-section__cta"
             >{{ row.cta }}</a
           >
@@ -74,6 +71,17 @@ import type { DentalAboutRow } from '../../types/dental'
 defineProps({
   rows: { type: Array as PropType<DentalAboutRow[]>, required: true },
 })
+
+/**
+ * Style mask for brand-tinted PNG assets.
+ * @param src Asset URL
+ */
+function maskStyle(src: string): Record<string, string> {
+  return {
+    maskImage: `url(${src})`,
+    WebkitMaskImage: `url(${src})`,
+  }
+}
 </script>
 
 <style scoped>
@@ -96,7 +104,7 @@ defineProps({
   left: 50%;
   top: 48%;
   width: 180px;
-  height: auto;
+  height: 142px;
   transform: translate(-50%, -50%) rotate(-16deg);
   pointer-events: none;
   z-index: 2;
@@ -167,7 +175,7 @@ defineProps({
   position: absolute;
   /* Slightly larger than image, lean left (counter-clockwise), above image */
   inset: 8% -2% -4% 0;
-  border: 2px solid #b1040e;
+  border: 2px solid var(--color-brand, #b1040e);
   border-radius: 10px;
   transform: rotate(-5deg);
   pointer-events: none;

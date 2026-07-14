@@ -3,14 +3,17 @@
     <div class="dental-footer__inner">
       <p class="dental-footer__copy">{{ page.copyright }}</p>
       <div
+        v-if="page.social.length > 0"
         class="dental-footer__social"
-        aria-label="Social links">
+        aria-label="Réseaux sociaux">
         <a
           v-for="icon in page.social"
           :key="icon.label"
           :href="icon.href"
           class="dental-footer__social-link"
-          :aria-label="icon.label">
+          :aria-label="icon.label"
+          target="_blank"
+          rel="noopener noreferrer">
           <img
             :src="icon.src"
             alt=""
@@ -35,7 +38,7 @@ defineProps({
 
 <style scoped>
 .dental-footer {
-  background: #b1040e;
+  background: var(--color-brand, #b1040e);
   width: 100%;
 }
 
@@ -95,6 +98,8 @@ defineProps({
   width: 28px;
   height: 28px;
   object-fit: contain;
+  /* Icônes blanches sur fond brand */
+  filter: brightness(0) invert(1);
 }
 
 .dental-footer__social-link:hover {

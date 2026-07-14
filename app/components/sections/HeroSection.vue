@@ -20,17 +20,14 @@
           >
         </div>
       </div>
-      <img
-        :src="hero.squiggle"
-        alt=""
-        class="hero-section__squiggle"
-        width="214"
-        height="169"
+      <span
+        class="dental-brand-mask hero-section__squiggle"
+        :style="maskStyle(hero.squiggle)"
         aria-hidden="true" />
       <div class="hero-section__media">
         <img
           :src="hero.image"
-          alt="Dental care professional with patient"
+          alt="Professionnel dentaire avec un patient"
           class="hero-section__image"
           width="1058"
           height="717" />
@@ -42,12 +39,10 @@
         v-for="feature in hero.features"
         :key="feature.title"
         class="hero-section__feature">
-        <img
-          :src="feature.icon"
-          alt=""
-          class="hero-section__feature-icon"
-          width="64"
-          height="64" />
+        <span
+          class="dental-brand-mask hero-section__feature-icon"
+          :style="maskStyle(feature.icon)"
+          aria-hidden="true" />
         <div class="hero-section__feature-text">
           <h2 class="heading-dental-md hero-section__feature-title">{{ feature.title }}</h2>
           <p class="body-dental">{{ feature.text }}</p>
@@ -64,6 +59,17 @@ import type { DentalPageContent } from '../../types/dental'
 defineProps({
   hero: { type: Object as PropType<DentalPageContent['hero']>, required: true },
 })
+
+/**
+ * Style mask for brand-tinted PNG assets.
+ * @param src Asset URL
+ */
+function maskStyle(src: string): Record<string, string> {
+  return {
+    maskImage: `url(${src})`,
+    WebkitMaskImage: `url(${src})`,
+  }
+}
 </script>
 
 <style scoped>
@@ -115,7 +121,8 @@ defineProps({
   left: 40%;
   top: 72%;
   width: min(214px, 18%);
-  height: auto;
+  height: min(169px, 14%);
+  aspect-ratio: 214 / 169;
   pointer-events: none;
   z-index: 4;
 }
@@ -158,7 +165,6 @@ defineProps({
 .hero-section__feature-icon {
   width: 64px;
   height: 64px;
-  object-fit: contain;
 }
 
 .hero-section__feature-text {

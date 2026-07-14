@@ -31,12 +31,9 @@
                 :key="pill"
                 class="pill-dental">
                 {{ pill }}
-                <img
-                  src="/exports/FQzok.png"
-                  alt=""
-                  width="10"
-                  height="10"
+                <span
                   class="pill-dental__arrow"
+                  :style="maskStyle('/exports/FQzok.png')"
                   aria-hidden="true" />
               </span>
             </div>
@@ -54,6 +51,17 @@ import type { DentalPageContent } from '../../types/dental'
 defineProps({
   services: { type: Object as PropType<DentalPageContent['services']>, required: true },
 })
+
+/**
+ * Style mask for brand-tinted PNG assets.
+ * @param src Asset URL
+ */
+function maskStyle(src: string): Record<string, string> {
+  return {
+    maskImage: `url(${src})`,
+    WebkitMaskImage: `url(${src})`,
+  }
+}
 </script>
 
 <style scoped>
@@ -129,7 +137,7 @@ defineProps({
   align-items: center;
   justify-content: center;
   padding: 20px 30px;
-  background: #b1040e;
+  background: var(--color-brand, #b1040e);
   border-radius: 10px 10px 0 0;
 }
 

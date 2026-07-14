@@ -3,12 +3,9 @@
     id="book"
     class="cta-section">
     <div class="container-dental cta-section__inner">
-      <img
-        src="/exports/knOCG.png"
-        alt=""
-        class="cta-section__squiggle"
-        width="176"
-        height="213"
+      <span
+        class="dental-brand-mask cta-section__squiggle"
+        :style="maskStyle('/exports/knOCG.png')"
         aria-hidden="true" />
 
       <div class="cta-section__intro">
@@ -22,12 +19,9 @@
             v-for="contact in cta.contacts"
             :key="contact.title"
             class="cta-section__contact">
-            <img
-              :src="contact.icon"
-              alt=""
-              class="cta-section__contact-icon-img"
-              width="64"
-              height="64"
+            <span
+              class="dental-brand-mask cta-section__contact-icon"
+              :style="maskStyle(contact.icon)"
               aria-hidden="true" />
             <div class="cta-section__contact-text">
               <h3 class="heading-dental-md cta-section__contact-title">{{ contact.title }}</h3>
@@ -49,34 +43,50 @@
           <label class="cta-section__field">
             <span class="cta-section__label">{{ cta.form.nameLabel }}</span>
             <input
+              v-model="form.name"
               type="text"
+              name="name"
+              autocomplete="name"
+              required
               :placeholder="cta.form.namePlaceholder"
               class="cta-section__input" />
           </label>
           <label class="cta-section__field">
             <span class="cta-section__label">{{ cta.form.phoneLabel }}</span>
             <input
+              v-model="form.phone"
               type="tel"
+              name="phone"
+              autocomplete="tel"
               :placeholder="cta.form.phonePlaceholder"
               class="cta-section__input" />
           </label>
           <label class="cta-section__field">
             <span class="cta-section__label">{{ cta.form.emailLabel }}</span>
             <input
+              v-model="form.email"
               type="email"
+              name="email"
+              autocomplete="email"
+              required
               :placeholder="cta.form.emailPlaceholder"
               class="cta-section__input" />
           </label>
           <label class="cta-section__field">
             <span class="cta-section__label">{{ cta.form.serviceLabel }}</span>
             <input
+              v-model="form.service"
               type="text"
+              name="service"
               :placeholder="cta.form.servicePlaceholder"
               class="cta-section__input" />
           </label>
           <label class="cta-section__field cta-section__field--message">
             <span class="cta-section__label">{{ cta.form.messageLabel }}</span>
             <textarea
+              v-model="form.message"
+              name="message"
+              required
               :placeholder="cta.form.messagePlaceholder"
               class="cta-section__textarea"
               rows="4" />
@@ -93,6 +103,7 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive } from 'vue'
 import type { PropType } from 'vue'
 import type { DentalPageContent } from '../../types/dental'
 
@@ -100,8 +111,48 @@ const props = defineProps({
   cta: { type: Object as PropType<DentalPageContent['cta']>, required: true },
 })
 
+const form = reactive({
+  name: '',
+  phone: '',
+  email: '',
+  service: '',
+  message: '',
+})
+
+/**
+ * Style mask for brand-tinted PNG assets.
+ * @param src Asset URL
+ */
+function maskStyle(src: string): Record<string, string> {
+  return {
+    maskImage: `url(${src})`,
+    WebkitMaskImage: `url(${src})`,
+  }
+}
+
+/**
+ * Ouvre le client mail avec sujet + corps préremplis (pas de backend).
+ */
 function onSubmit(): void {
-  window.location.href = `mailto:${props.cta.contacts[1]?.value ?? 'contact@example.com'}`
+  const to = props.cta.mailtoEmail || props.cta.contacts[1]?.value || ''
+  if (!to) return
+
+  const lines = [
+    `Nom : ${form.name.trim()}`,
+    `Téléphone : ${form.phone.trim() || '—'}`,
+    `E-mail : ${form.email.trim()}`,
+    `Soin souhaité : ${form.service.trim() || '—'}`,
+    '',
+    'Message :',
+    form.message.trim(),
+  ]
+
+  const params = [
+    `subject=${encodeURIComponent(props.cta.form.subject)}`,
+    `body=${encodeURIComponent(lines.join('\n'))}`,
+  ].join('&')
+
+  window.location.href = `mailto:${to}?${params}`
 }
 </script>
 
@@ -123,11 +174,10 @@ function onSubmit(): void {
 .cta-section__squiggle {
   display: none;
   position: absolute;
-  /* Export has transparent padding; nudge up/left away from the heading */
   left: -96px;
   top: -150px;
   width: 300px;
-  height: auto;
+  height: 360px;
   pointer-events: none;
   z-index: 1;
 }
@@ -172,11 +222,9 @@ function onSubmit(): void {
   text-align: center;
 }
 
-.cta-section__contact-icon-img {
-  display: block;
+.cta-section__contact-icon {
   width: 64px;
   height: 64px;
-  object-fit: contain;
 }
 
 .cta-section__contact-text {
@@ -199,7 +247,7 @@ function onSubmit(): void {
 }
 
 .cta-section__contact-value {
-  color: #b1040e;
+  color: var(--color-brand, #b1040e);
   font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
   font-size: 18px;
   text-decoration: none;
@@ -234,7 +282,7 @@ function onSubmit(): void {
 }
 
 .cta-section__label {
-  color: #2e333e;
+  color: var(--color-ink, #2e333e);
   font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 600;
@@ -247,7 +295,7 @@ function onSubmit(): void {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background: #ffffff;
-  color: #2e333e;
+  color: var(--color-ink, #2e333e);
   font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
   font-size: 18px;
   box-sizing: border-box;

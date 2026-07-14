@@ -9,7 +9,9 @@
       <ServicesSection :services="page.services" />
       <AboutSection :rows="page.aboutRows" />
       <TeamSection :team="page.team" />
-      <BrandSection :brand="page.brand" />
+      <BrandSection
+        v-if="page.brand.logos.length > 0"
+        :brand="page.brand" />
       <CtaSection :cta="page.cta" />
     </main>
     <SiteFooter :page="page" />
