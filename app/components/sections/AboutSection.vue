@@ -74,14 +74,14 @@ import { aboutRows } from '../../data/site'
 <style scoped>
 .about-section {
   background: #ffffff;
-  padding: 80px 0;
+  padding: 100px 0 120px;
 }
 
 .about-section__inner {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 100px;
 }
 
 .about-section__squiggle {
@@ -138,11 +138,11 @@ import { aboutRows } from '../../data/site'
   }
 
   .about-section {
-    padding: 48px 0;
+    padding: 64px 0 80px;
   }
 
   .about-section__inner {
-    gap: 56px;
+    gap: 72px;
   }
 }
 
@@ -158,12 +158,13 @@ import { aboutRows } from '../../data/site'
 
 .about-section__frame-border {
   position: absolute;
-  inset: 0;
+  /* Slightly larger than image, lean left (counter-clockwise), above image */
+  inset: 8% -2% -4% 0;
   border: 2px solid #b1040e;
   border-radius: 10px;
-  transform: rotate(5deg);
+  transform: rotate(-5deg);
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
 }
 
 .about-section__image {
@@ -181,7 +182,7 @@ import { aboutRows } from '../../data/site'
 
 @media (min-width: 900px) {
   .about-section__inner {
-    gap: 120px;
+    gap: 160px;
   }
 
   .about-section__squiggle {

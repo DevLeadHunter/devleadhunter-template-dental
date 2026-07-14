@@ -37,7 +37,7 @@ import { team } from '../../data/site'
 
 <style scoped>
 .team-section {
-  padding: 60px 0 80px;
+  padding: 100px 0 80px;
 }
 
 .team-section__inner {
@@ -88,11 +88,11 @@ import { team } from '../../data/site'
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 16px;
   width: 100%;
   max-width: 340px;
   margin-top: -100px;
-  padding: 40px;
+  padding: 22px 28px;
   border-radius: 10px;
   background: #ffffff;
   border: 1px solid #b1040e;
@@ -106,7 +106,7 @@ import { team } from '../../data/site'
 .team-section__identity {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 4px;
   align-items: center;
 }
 

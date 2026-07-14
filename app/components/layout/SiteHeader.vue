@@ -79,7 +79,8 @@ const contactItems = [
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  max-width: 1440px;
+  width: 100%;
+  max-width: none;
   margin-inline: auto;
   padding: 25px 16px;
   box-sizing: border-box;
@@ -216,17 +217,9 @@ const contactItems = [
   }
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1440px) {
   .dental-header__inner {
-    max-width: 1600px;
-    padding: 25px 80px;
-  }
-}
-
-@media (min-width: 1920px) {
-  .dental-header__inner {
-    max-width: 1680px;
-    padding: 28px 100px;
+    padding: 25px 130px;
   }
 }
 </style>

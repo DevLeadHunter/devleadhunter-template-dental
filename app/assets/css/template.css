@@ -29,27 +29,14 @@ body {
 }
 
 /*
- * Pencil canvas = 1440. Content column ~1180.
- * On 1920: slightly wider shell/content so it doesn’t look like a narrow strip.
- * On tablet/mobile: tighter gutters.
+ * Full-bleed page: sections span the viewport.
+ * Content column stays ~1180 (Pencil) with responsive gutters.
  */
 .page-shell {
   width: 100%;
-  max-width: 1440px;
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
   background: #f9f7f4;
-}
-
-@media (min-width: 1600px) {
-  .page-shell {
-    max-width: 1600px;
-  }
-}
-
-@media (min-width: 1920px) {
-  .page-shell {
-    max-width: 1680px;
-  }
 }
 
 .container-dental {
@@ -72,21 +59,16 @@ body {
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
   .container-dental {
-    padding-inline: 0;
+    padding-inline: 130px;
+    max-width: none;
   }
 }
 
 @media (min-width: 1600px) {
   .container-dental {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1920px) {
-  .container-dental {
-    max-width: 1320px;
+    padding-inline: max(130px, calc((100% - 1180px) / 2));
   }
 }
 

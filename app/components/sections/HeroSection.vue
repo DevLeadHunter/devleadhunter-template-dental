@@ -18,13 +18,6 @@
             class="btn-dental btn-dental--outline"
             >{{ hero.ctaSecondary }}</a
           >
-          <img
-            :src="hero.squiggle"
-            alt=""
-            class="hero-section__squiggle"
-            width="214"
-            height="169"
-            aria-hidden="true" />
         </div>
       </div>
       <div class="hero-section__media">
@@ -34,6 +27,13 @@
           class="hero-section__image"
           width="1058"
           height="717" />
+        <img
+          :src="hero.squiggle"
+          alt=""
+          class="hero-section__squiggle"
+          width="214"
+          height="169"
+          aria-hidden="true" />
       </div>
     </div>
 
@@ -100,15 +100,14 @@ import { hero } from '../../data/site'
   flex-wrap: wrap;
   align-items: center;
   gap: 16px 30px;
-  position: relative;
 }
 
 .hero-section__squiggle {
   display: none;
   position: absolute;
-  /* Pencil Line ≈ x:528 within hero content column → toward image gap */
-  left: 380px;
-  top: 36px;
+  /* Pencil: Line x≈528 vs Image x≈603 → ~-75px from image left, near bottom */
+  left: -74px;
+  bottom: 48px;
   width: 214px;
   height: auto;
   pointer-events: none;

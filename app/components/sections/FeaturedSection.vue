@@ -50,7 +50,7 @@ import { featured } from '../../data/site'
 
 <style scoped>
 .featured-section {
-  padding: 48px 0 64px;
+  padding: 100px 0 80px;
 }
 
 .featured-section__inner {
@@ -136,7 +136,7 @@ import { featured } from '../../data/site'
 
 @media (min-width: 640px) {
   .featured-section {
-    padding: 56px 0 72px;
+    padding: 110px 0 80px;
   }
 
   .featured-section__gallery {
@@ -156,7 +156,7 @@ import { featured } from '../../data/site'
 
 @media (min-width: 1024px) {
   .featured-section {
-    padding: 60px 0 80px;
+    padding: 120px 0 90px;
   }
 
   .featured-section__inner {

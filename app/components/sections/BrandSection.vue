@@ -57,6 +57,9 @@ import { brand } from '../../data/site'
   object-fit: contain;
   flex: 1 1 100px;
   max-width: 150px;
+  /* Maquette logos are black / grayscale, not blue */
+  filter: grayscale(1) brightness(0);
+  opacity: 0.92;
 }
 
 @media (min-width: 640px) {

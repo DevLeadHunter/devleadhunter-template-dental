@@ -53,7 +53,7 @@ import { services } from '../../data/site'
 
 <style scoped>
 .services-section {
-  padding: 60px 0 80px;
+  padding: 60px 0 120px;
 }
 
 .services-section__inner {

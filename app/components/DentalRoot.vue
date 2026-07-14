@@ -1,5 +1,5 @@
 <template>
-  <div class="page-shell bg-beige min-h-dvh font-sans">
+  <div class="page-shell bg-beige min-h-dvh overflow-x-clip font-sans">
     <HeroSection />
     <FeaturedSection />
     <ServicesSection />

@@ -109,7 +109,8 @@ function onSubmit(): void {
 <style scoped>
 .cta-section {
   background: #ffffff;
-  padding: 48px 0 64px;
+  padding: 80px 0 64px;
+  overflow: visible;
 }
 
 .cta-section__inner {
@@ -117,16 +118,17 @@ function onSubmit(): void {
   display: flex;
   flex-direction: column;
   gap: 0;
+  overflow: visible;
 }
 
 .cta-section__squiggle {
   display: none;
   position: absolute;
-  left: -20px;
-  top: -40px;
-  width: 140px;
+  /* Export has transparent padding; scale up so the stroke matches Pencil ~176px */
+  left: -36px;
+  top: -100px;
+  width: 300px;
   height: auto;
-  transform: rotate(-31deg);
   pointer-events: none;
   z-index: 1;
 }
@@ -285,7 +287,7 @@ function onSubmit(): void {
 
 @media (min-width: 768px) {
   .cta-section {
-    padding: 60px 0 80px;
+    padding: 100px 0 80px;
   }
 
   .cta-section__contacts {
