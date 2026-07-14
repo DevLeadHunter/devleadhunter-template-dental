@@ -40,16 +40,19 @@ body,
   height: auto;
   min-height: 100%;
   margin: 0;
-  overflow: visible;
+  overflow-x: clip;
 }
 
 .site-root {
   position: relative;
   min-height: 100vh;
   background: #f9f7f4;
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 .site-main {
   position: relative;
+  overflow-x: clip;
 }
 </style>

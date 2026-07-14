@@ -45,47 +45,41 @@
       <form
         class="cta-section__form"
         @submit.prevent="onSubmit">
-        <div class="cta-section__form-left">
-          <div class="cta-section__form-col">
-            <label class="cta-section__field">
-              <span class="cta-section__label">{{ cta.form.nameLabel }}</span>
-              <input
-                type="text"
-                :placeholder="cta.form.namePlaceholder"
-                class="cta-section__input" />
-            </label>
-            <label class="cta-section__field">
-              <span class="cta-section__label">{{ cta.form.emailLabel }}</span>
-              <input
-                type="email"
-                :placeholder="cta.form.emailPlaceholder"
-                class="cta-section__input" />
-            </label>
-          </div>
-          <div class="cta-section__form-col">
-            <label class="cta-section__field">
-              <span class="cta-section__label">{{ cta.form.phoneLabel }}</span>
-              <input
-                type="tel"
-                :placeholder="cta.form.phonePlaceholder"
-                class="cta-section__input" />
-            </label>
-            <label class="cta-section__field">
-              <span class="cta-section__label">{{ cta.form.serviceLabel }}</span>
-              <input
-                type="text"
-                :placeholder="cta.form.servicePlaceholder"
-                class="cta-section__input" />
-            </label>
-          </div>
-        </div>
-
-        <div class="cta-section__form-right">
+        <div class="cta-section__form-grid">
           <label class="cta-section__field">
+            <span class="cta-section__label">{{ cta.form.nameLabel }}</span>
+            <input
+              type="text"
+              :placeholder="cta.form.namePlaceholder"
+              class="cta-section__input" />
+          </label>
+          <label class="cta-section__field">
+            <span class="cta-section__label">{{ cta.form.phoneLabel }}</span>
+            <input
+              type="tel"
+              :placeholder="cta.form.phonePlaceholder"
+              class="cta-section__input" />
+          </label>
+          <label class="cta-section__field">
+            <span class="cta-section__label">{{ cta.form.emailLabel }}</span>
+            <input
+              type="email"
+              :placeholder="cta.form.emailPlaceholder"
+              class="cta-section__input" />
+          </label>
+          <label class="cta-section__field">
+            <span class="cta-section__label">{{ cta.form.serviceLabel }}</span>
+            <input
+              type="text"
+              :placeholder="cta.form.servicePlaceholder"
+              class="cta-section__input" />
+          </label>
+          <label class="cta-section__field cta-section__field--message">
             <span class="cta-section__label">{{ cta.form.messageLabel }}</span>
             <textarea
               :placeholder="cta.form.messagePlaceholder"
-              class="cta-section__textarea" />
+              class="cta-section__textarea"
+              rows="4" />
           </label>
           <button
             type="submit"
@@ -213,32 +207,17 @@ function onSubmit(): void {
 .cta-section__form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
   width: 100%;
   margin-top: 48px;
-  padding-top: 40px;
+  padding: 48px 0 24px;
   border-top: 1px solid #bdbdbd;
   box-sizing: border-box;
 }
 
-.cta-section__form-left {
-  display: flex;
-  flex-direction: column;
+.cta-section__form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 24px;
-  width: 100%;
-}
-
-.cta-section__form-col {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-}
-
-.cta-section__form-right {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
   width: 100%;
 }
 
@@ -276,7 +255,7 @@ function onSubmit(): void {
 
 .cta-section__textarea {
   resize: vertical;
-  min-height: 89px;
+  min-height: 120px;
   padding: 15px 20px;
 }
 
@@ -295,9 +274,18 @@ function onSubmit(): void {
     gap: 24px;
   }
 
-  .cta-section__form-left {
-    flex-direction: row;
+  .cta-section__form {
+    padding: 56px 0 32px;
+  }
+
+  .cta-section__form-grid {
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
+  }
+
+  .cta-section__field--message,
+  .cta-section__submit {
+    grid-column: 1 / -1;
   }
 }
 
@@ -311,24 +299,13 @@ function onSubmit(): void {
   }
 
   .cta-section__form {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 65px;
     margin-top: 60px;
-    padding-top: 60px;
+    padding: 64px 0 40px;
   }
 
-  .cta-section__form-left {
-    width: 45.5%;
-    max-width: 536px;
-    flex-shrink: 0;
-  }
-
-  .cta-section__form-right {
-    width: 48.5%;
-    max-width: 569px;
-    flex-shrink: 0;
+  .cta-section__submit {
+    max-width: 360px;
+    justify-self: start;
   }
 }
 </style>

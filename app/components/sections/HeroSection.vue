@@ -20,6 +20,13 @@
           >
         </div>
       </div>
+      <img
+        :src="hero.squiggle"
+        alt=""
+        class="hero-section__squiggle"
+        width="214"
+        height="169"
+        aria-hidden="true" />
       <div class="hero-section__media">
         <img
           :src="hero.image"
@@ -27,13 +34,6 @@
           class="hero-section__image"
           width="1058"
           height="717" />
-        <img
-          :src="hero.squiggle"
-          alt=""
-          class="hero-section__squiggle"
-          width="214"
-          height="169"
-          aria-hidden="true" />
       </div>
     </div>
 
@@ -72,6 +72,7 @@ import { hero } from '../../data/site'
   display: flex;
   flex-direction: column;
   gap: 32px;
+  position: relative;
 }
 
 .hero-section__content {
@@ -105,19 +106,20 @@ import { hero } from '../../data/site'
 .hero-section__squiggle {
   display: none;
   position: absolute;
-  /* Pencil: Line x≈528 vs Image x≈603 → ~-75px from image left, near bottom */
-  left: -74px;
-  bottom: 48px;
-  width: 214px;
+  /* Pencil cc1mi: x≈528/1311 ≈40%, y≈505/674 ≈75% — bridge text → image edge */
+  left: 40%;
+  top: 72%;
+  width: min(214px, 18%);
   height: auto;
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
 }
 
 .hero-section__media {
   position: relative;
   width: 100%;
   border-radius: 0;
+  z-index: 1;
 }
 
 .hero-section__image {
@@ -136,6 +138,7 @@ import { hero } from '../../data/site'
   grid-template-columns: 1fr;
   gap: 40px;
   margin-top: 48px;
+  width: 100%;
 }
 
 .hero-section__feature {
@@ -217,7 +220,8 @@ import { hero } from '../../data/site'
   .hero-section__features {
     gap: 31px;
     margin-top: 72px;
-    max-width: 1181px;
+    width: 100%;
+    max-width: none;
   }
 }
 

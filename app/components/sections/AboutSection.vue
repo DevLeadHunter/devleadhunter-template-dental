@@ -75,6 +75,7 @@ import { aboutRows } from '../../data/site'
 .about-section {
   background: #ffffff;
   padding: 100px 0 120px;
+  overflow-x: clip;
 }
 
 .about-section__inner {
@@ -154,6 +155,7 @@ import { aboutRows } from '../../data/site'
 .about-section__frame {
   position: relative;
   width: min(100%, 495px);
+  overflow: visible;
 }
 
 .about-section__frame-border {
@@ -178,6 +180,27 @@ import { aboutRows } from '../../data/site'
   object-fit: cover;
   border-radius: 10px;
   margin: 19px 0 0 19px;
+}
+
+@media (max-width: 899px) {
+  .about-section__frame {
+    width: 100%;
+    max-width: 100%;
+    /* Keep rotated frames inside the viewport */
+    padding: 12px 16px 20px;
+    box-sizing: border-box;
+  }
+
+  .about-section__frame-border {
+    inset: 6% 8% 4% 8%;
+    transform: rotate(-3deg);
+  }
+
+  .about-section__image {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
 }
 
 @media (min-width: 900px) {

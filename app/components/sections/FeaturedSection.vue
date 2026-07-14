@@ -120,7 +120,7 @@ import { featured } from '../../data/site'
 .featured-section__stats {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
+  gap: 48px;
   justify-items: center;
   width: 100%;
   max-width: 1039px;

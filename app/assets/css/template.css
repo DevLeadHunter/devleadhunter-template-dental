@@ -30,13 +30,14 @@ body {
 
 /*
  * Full-bleed page: sections span the viewport.
- * Content column stays ~1180 (Pencil) with responsive gutters.
+ * Content column stays ~1180 (Pencil), centered.
  */
 .page-shell {
   width: 100%;
   max-width: none;
   margin-inline: 0;
   background: #f9f7f4;
+  overflow-x: clip;
 }
 
 .container-dental {
@@ -59,16 +60,9 @@ body {
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
   .container-dental {
-    padding-inline: 130px;
-    max-width: none;
-  }
-}
-
-@media (min-width: 1600px) {
-  .container-dental {
-    padding-inline: max(130px, calc((100% - 1180px) / 2));
+    padding-inline: 0;
   }
 }
 

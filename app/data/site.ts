@@ -187,7 +187,7 @@ export const cta = {
   form: {
     nameLabel: 'Name',
     namePlaceholder: 'Full Name',
-    emailLabel: 'Emil Address',
+    emailLabel: 'Email Address',
     emailPlaceholder: 'email@example.com',
     phoneLabel: 'Phone Number',
     phonePlaceholder: '(123) 456 7890',
