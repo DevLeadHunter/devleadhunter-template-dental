@@ -14,6 +14,11 @@ node_modules
 logs
 *.log
 
+# Pencil design extracts (local only)
+.pencil-extract
+.qa
+scripts-qa.mjs
+
 # Misc
 .DS_Store
 .fleet
