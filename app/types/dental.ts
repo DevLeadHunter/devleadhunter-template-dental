@@ -143,11 +143,34 @@ export interface DentalPageContent {
 
 const FEATURE_ICONS = ['/exports/DqRcy.png', '/exports/dCWWe.png', '/exports/wNoa7.png'] as const
 const GALLERY_OFFSETS: Array<'low' | 'high' | 'mid'> = ['low', 'high', 'mid', 'high']
-const SERVICE_FALLBACK_IMAGES = [
-  '/images/image-import-11.jpg',
-  '/images/image-import-18.jpg',
-  '/images/image-import-15.jpg',
-] as const
+
+/**
+ * Photos Unsplash dentaires — utilisées dès qu’il manque des images prospect
+ * (hero, galerie, soins, à propos, équipe).
+ */
+const STOCK = {
+  hero: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1400&q=80',
+  about:
+    'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80',
+  newPatients:
+    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80',
+  gallery: [
+    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=800&q=80',
+  ],
+  services: [
+    'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=900&q=80',
+  ],
+  team: [
+    'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=600&q=80',
+  ],
+} as const
 
 const SOCIAL_ICON_BY_NETWORK: Record<string, string> = {
   facebook: '/exports/H9JZK.png',
@@ -165,7 +188,7 @@ const defaults = {
   heroBadge: 'CABINET DENTAIRE',
   ctaPrimary: 'Prendre rendez-vous',
   ctaSecondary: 'Voir nos soins',
-  heroImage: '/images/image-import-7.png',
+  heroImage: STOCK.hero,
   features: [
     {
       icon: '/exports/DqRcy.png',
@@ -187,10 +210,10 @@ const defaults = {
   featuredBody:
     'Cabinet familial de confiance : transparence, efficacité et une communication claire à chaque étape du parcours de soins.',
   featuredImages: [
-    { src: '/images/image-import-1.jpg', offset: 'low' as const },
-    { src: '/images/image-import-19.jpg', offset: 'high' as const },
-    { src: '/images/image-import-1.png', offset: 'mid' as const },
-    { src: '/images/image-import-9.jpg', offset: 'high' as const },
+    { src: STOCK.gallery[0], offset: 'low' as const },
+    { src: STOCK.gallery[1], offset: 'high' as const },
+    { src: STOCK.gallery[2], offset: 'mid' as const },
+    { src: STOCK.gallery[3], offset: 'high' as const },
   ],
   stats: [
     { value: '20', label: "Ans d'expérience", inkDark: true },
@@ -204,7 +227,7 @@ const defaults = {
   serviceCards: [
     {
       title: 'Dentisterie générale',
-      image: '/images/image-import-11.jpg',
+      image: STOCK.services[0],
       description: 'Contrôles, détartrage, soins cariés et suivi préventif pour toute la famille.',
       pills: [
         'Obturations',
@@ -218,14 +241,14 @@ const defaults = {
     },
     {
       title: 'Esthétique du sourire',
-      image: '/images/image-import-18.jpg',
+      image: STOCK.services[1],
       description:
         'Blanchiment, facettes, couronnes et aligneurs : des résultats naturels pour sourire en confiance.',
       pills: ['Blanchiment', 'Couronnes', 'Facettes', 'Implants', 'Aligneurs'],
     },
     {
       title: 'Urgences dentaires',
-      image: '/images/image-import-15.jpg',
+      image: STOCK.services[2],
       description:
         'Douleur, dent cassée ou abcès : contactez-nous rapidement, nous organisons un créneau prioritaire.',
       pills: ['Douleurs sévères', 'Saignements', 'Dent cassée', 'Traumatismes'],
@@ -236,7 +259,7 @@ const defaults = {
     'Expertise, expérience et technologies modernes : nous veillons à des sourires sains et durables.',
     'Chaque plan de soins est expliqué simplement, avec des options adaptées à vos besoins et à votre budget.',
   ],
-  aboutImage: '/images/image-import-14.jpg',
+  aboutImage: STOCK.about,
   aboutRows: [
     {
       eyebrow: 'À PROPOS',
@@ -247,7 +270,7 @@ const defaults = {
       ],
       cta: 'Nos soins',
       ctaHref: '#services',
-      image: '/images/image-import-14.jpg',
+      image: STOCK.about,
       imageFirst: true,
     },
     {
@@ -259,7 +282,7 @@ const defaults = {
       ],
       cta: 'Nos soins',
       ctaHref: '#services',
-      image: '/images/image-import-9.png',
+      image: STOCK.newPatients,
       imageFirst: false,
     },
   ] as DentalAboutRow[],
@@ -272,19 +295,19 @@ const defaults = {
         name: 'Dr Sophie Martin',
         role: 'CHIRURGIEN-DENTISTE',
         bio: 'Soins familiaux, prévention et accompagnement au long cours.',
-        image: '/images/image-import-4.jpg',
+        image: STOCK.team[0],
       },
       {
         name: 'Dr Marc Lefèvre',
         role: 'CHIRURGIEN-DENTISTE',
         bio: 'Esthétique du sourire, couronnes et réhabilitation implantaire.',
-        image: '/images/image-import-2.jpg',
+        image: STOCK.team[1],
       },
       {
         name: 'Dr Amina Benali',
         role: 'CHIRURGIEN-DENTISTE',
         bio: 'Soins pédiatriques et premier contact en douceur pour les enfants.',
-        image: '/images/image-import.jpg',
+        image: STOCK.team[2],
       },
     ],
   },
@@ -302,6 +325,50 @@ const defaults = {
  */
 function resolveText(value: string | undefined, fallback: string): string {
   return typeof value === 'string' && value.trim().length > 0 ? value : fallback
+}
+
+/**
+ * Première URL non vide parmi les candidats, sinon fallback.
+ * @param fallback Image stock Unsplash
+ * @param candidates URLs prospect (peuvent être vides)
+ * @returns URL à afficher
+ */
+function resolveImage(fallback: string, ...candidates: Array<string | undefined>): string {
+  for (const candidate of candidates) {
+    if (typeof candidate === 'string' && candidate.trim().length > 0) {
+      return candidate.trim()
+    }
+  }
+  return fallback
+}
+
+/**
+ * Complète une liste d’URLs jusqu’à `count` avec des fallbacks Unsplash (sans doublons).
+ * @param urls Images prospect
+ * @param fallbacks Pool stock
+ * @param count Taille cible
+ * @returns Liste remplie
+ */
+function padImageUrls(urls: string[], fallbacks: readonly string[], count: number): string[] {
+  const result: string[] = []
+  const seen = new Set<string>()
+  for (const url of urls) {
+    const trimmed = url.trim()
+    if (!trimmed || seen.has(trimmed)) continue
+    seen.add(trimmed)
+    result.push(trimmed)
+    if (result.length >= count) return result
+  }
+  for (const fallback of fallbacks) {
+    if (seen.has(fallback)) continue
+    seen.add(fallback)
+    result.push(fallback)
+    if (result.length >= count) return result
+  }
+  while (result.length < count && fallbacks.length > 0) {
+    result.push(fallbacks[result.length % fallbacks.length])
+  }
+  return result
 }
 
 /**
@@ -377,13 +444,12 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
     ? content.gallery.map((item) => item.url ?? '').filter((url) => url.length > 0)
     : []
 
-  const featuredImages: DentalGalleryImage[] =
-    galleryUrls.length > 0
-      ? galleryUrls.slice(0, 4).map((src, index) => ({
-          src,
-          offset: GALLERY_OFFSETS[index] ?? 'mid',
-        }))
-      : [...defaults.featuredImages]
+  const featuredImages: DentalGalleryImage[] = padImageUrls(galleryUrls, STOCK.gallery, 4).map(
+    (src, index) => ({
+      src,
+      offset: GALLERY_OFFSETS[index] ?? 'mid',
+    }),
+  )
 
   const servicesRaw =
     Array.isArray(content.services) && content.services.length > 0
@@ -400,17 +466,17 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
 
   const serviceCards: DentalServiceCard[] = servicesRaw.slice(0, 3).map((service, index) => {
     const fallback = defaults.serviceCards[index] ?? defaults.serviceCards[0]
-    const imageFromGallery = galleryUrls[index] || galleryUrls[0] || ''
     return {
       title: service.title,
       description: service.description || fallback.description,
-      image:
-        imageFromGallery ||
-        content.heroImage ||
-        content.aboutImage ||
-        fallback.image ||
-        SERVICE_FALLBACK_IMAGES[index] ||
-        SERVICE_FALLBACK_IMAGES[0],
+      image: resolveImage(
+        STOCK.services[index] ?? STOCK.services[0],
+        galleryUrls[index],
+        galleryUrls[0],
+        content.heroImage,
+        content.aboutImage,
+        fallback.image,
+      ),
       pills: fallback.pills,
     }
   })
@@ -421,13 +487,19 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
       ...defaults.aboutRows[0],
       heading: resolveText(content.aboutHeading, defaults.aboutHeading),
       paragraphs: [aboutText, defaults.aboutParagraphs[1]],
-      image: resolveText(content.aboutImage, defaults.aboutImage),
+      image: resolveImage(STOCK.about, content.aboutImage, galleryUrls[0], content.heroImage),
       cta: 'Nos soins',
       ctaHref: '#services',
     },
     {
       ...defaults.aboutRows[1],
-      image: galleryUrls[1] || galleryUrls[0] || defaults.aboutRows[1].image,
+      image: resolveImage(
+        STOCK.newPatients,
+        galleryUrls[1],
+        galleryUrls[0],
+        content.aboutImage,
+        content.heroImage,
+      ),
       cta: 'Nos soins',
       ctaHref: '#services',
     },
@@ -439,10 +511,10 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
           name: review.author || defaults.team.members[index]?.name || 'Praticien',
           role: defaults.team.members[index]?.role || 'CHIRURGIEN-DENTISTE',
           bio: review.text || defaults.team.members[index]?.bio || '',
-          image:
-            galleryUrls[index] ||
-            defaults.team.members[index]?.image ||
-            defaults.team.members[0].image,
+          image: resolveImage(
+            STOCK.team[index] ?? STOCK.team[0],
+            defaults.team.members[index]?.image,
+          ),
         }))
       : [...defaults.team.members]
 
@@ -490,7 +562,7 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
       subheading: resolveText(content.subtitle, defaults.heroSubheading),
       ctaPrimary: resolveText(content.ctaCallLabel, defaults.ctaPrimary),
       ctaSecondary: resolveText(content.ctaQuoteLabel, defaults.ctaSecondary),
-      image: resolveText(content.heroImage, defaults.heroImage),
+      image: resolveImage(STOCK.hero, content.heroImage, galleryUrls[0]),
       squiggle: '/exports/cc1mi.png',
       features,
     },
