@@ -4,14 +4,14 @@
 @source '../../../.playground/app/**/*.{vue,ts}';
 
 @theme {
-  --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'El Messiri', Georgia, serif;
+  --font-dental-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+  --font-dental-heading: 'El Messiri', Georgia, serif;
 
-  --color-brand: #b1040e;
-  --color-accent: #80060d;
-  --color-beige: #f9f7f4;
-  --color-ink: #2e333e;
-  --color-white: #ffffff;
+  --color-dental-brand: #b1040e;
+  --color-dental-accent: #80060d;
+  --color-dental-beige: #f9f7f4;
+  --color-dental-ink: #2e333e;
+  --color-dental-white: #ffffff;
 }
 
 html {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="page-shell bg-beige min-h-dvh overflow-x-clip font-sans"
+    class="page-shell bg-dental-beige font-dental-sans min-h-dvh overflow-x-clip"
     :style="themeVars">
     <SiteHeader :page="page" />
     <main>
