@@ -4,17 +4,27 @@
     :style="themeVars">
     <SiteHeader :page="page" />
     <main>
-      <HeroSection :hero="page.hero" />
+      <HeroSection
+        v-bind="editableAttrs(props.content._editable?.hero)"
+        :hero="page.hero" />
       <FeaturedSection :featured="page.featured" />
-      <ServicesSection :services="page.services" />
-      <AboutSection :rows="page.aboutRows" />
+      <ServicesSection
+        v-bind="editableAttrs(props.content._editable?.services)"
+        :services="page.services" />
+      <AboutSection
+        v-bind="editableAttrs(props.content._editable?.about)"
+        :rows="page.aboutRows" />
       <TeamSection :team="page.team" />
       <BrandSection
         v-if="page.brand.logos.length > 0"
         :brand="page.brand" />
-      <CtaSection :cta="page.cta" />
+      <CtaSection
+        v-bind="editableAttrs(props.content._editable?.contact)"
+        :cta="page.cta" />
     </main>
-    <SiteFooter :page="page" />
+    <SiteFooter
+      v-bind="editableAttrs(props.content._editable?.contact)"
+      :page="page" />
   </div>
 </template>
 
