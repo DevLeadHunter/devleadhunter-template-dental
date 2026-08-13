@@ -5,7 +5,13 @@
         href="#"
         class="dental-header__brand"
         :aria-label="`${page.businessName} — accueil`">
+        <img
+          v-if="page.logo"
+          :src="page.logo"
+          alt=""
+          class="dental-header__logo-img" />
         <span
+          v-else
           class="dental-brand-mask dental-header__logo"
           :style="maskStyle('/exports/q1xDL.png')"
           aria-hidden="true" />
@@ -108,6 +114,14 @@ function maskStyle(src: string): Record<string, string> {
 .dental-header__logo {
   width: 36px;
   height: 42px;
+}
+
+.dental-header__logo-img {
+  width: auto;
+  height: 42px;
+  max-width: 120px;
+  object-fit: contain;
+  flex: none;
 }
 
 .dental-header__wordmark {

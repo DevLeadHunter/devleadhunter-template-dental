@@ -76,6 +76,7 @@ export interface DentalSocialLink {
 export interface DentalPageContent {
   theme: DentalTheme
   businessName: string
+  logo: string
   tagline: string
   phone: string
   phoneDisplay: string
@@ -401,6 +402,7 @@ function socialIconFor(network: string): string {
 export function buildDentalContent(content: SiteContent): DentalPageContent {
   const palette = content.palette ?? {}
   const businessName = resolveText(content.businessName, 'Cabinet Dentaire')
+  const logo = typeof content.logo === 'string' ? content.logo.trim() : ''
   const city = resolveText(content.city, '')
   const area = resolveText(content.area, city)
   const phone = resolveText(content.phone, '01 00 00 00 00')
@@ -548,6 +550,7 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
       accent: palette.accent || dentalDefaultTheme.accent,
     },
     businessName,
+    logo,
     tagline: defaults.tagline,
     phone,
     phoneDisplay: formatPhoneDisplay(phone),
