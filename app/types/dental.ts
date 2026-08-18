@@ -459,11 +459,13 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
           .map((service) => ({
             title: service.title ?? '',
             description: service.description ?? '',
+            image: service.image ?? '',
           }))
           .filter((service) => service.title.length > 0)
       : defaults.serviceCards.map((card) => ({
           title: card.title,
           description: card.description,
+          image: card.image,
         }))
 
   const serviceCards: DentalServiceCard[] = servicesRaw.slice(0, 3).map((service, index) => {
@@ -471,14 +473,8 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
     return {
       title: service.title,
       description: service.description || fallback.description,
-      image: resolveImage(
-        STOCK.services[index] ?? STOCK.services[0],
-        galleryUrls[index],
-        galleryUrls[0],
-        content.heroImage,
-        content.aboutImage,
-        fallback.image,
-      ),
+      // Photo dédiée par soin (champ CMS `services[].image`), sinon la photo par défaut du template.
+      image: resolveImage(STOCK.services[index] ?? STOCK.services[0], service.image),
       pills: fallback.pills,
     }
   })
@@ -495,30 +491,34 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
     },
     {
       ...defaults.aboutRows[1],
-      image: resolveImage(
-        STOCK.newPatients,
-        galleryUrls[1],
-        galleryUrls[0],
-        content.aboutImage,
-        content.heroImage,
-      ),
+      // Photo « nouveaux patients » = champ CMS dédié `images.aboutSecondary`, sinon photo par défaut.
+      image: resolveImage(STOCK.newPatients, content.images?.aboutSecondary),
       cta: 'Nos soins',
       ctaHref: '#services',
     },
   ]
 
-  const teamMembers: DentalTeamMember[] =
-    Array.isArray(content.reviews) && content.reviews.length >= 3
-      ? content.reviews.slice(0, 3).map((review, index) => ({
-          name: review.author || defaults.team.members[index]?.name || 'Praticien',
-          role: defaults.team.members[index]?.role || 'CHIRURGIEN-DENTISTE',
-          bio: review.text || defaults.team.members[index]?.bio || '',
+  // Équipe = bloks dédiés `teamMembers` (photo + nom + rôle + bio), éditables par le client dans le CMS.
+  // Chaque champ vide retombe sur le praticien par défaut correspondant ; aucune donnée → roster template.
+  const teamFromContent: DentalTeamMember[] = Array.isArray(content.teamMembers)
+    ? content.teamMembers
+        .map((member, index) => ({
+          name: resolveText(member.name, defaults.team.members[index]?.name ?? 'Praticien'),
+          role: resolveText(
+            member.role,
+            defaults.team.members[index]?.role ?? 'CHIRURGIEN-DENTISTE',
+          ),
+          bio: resolveText(member.bio, defaults.team.members[index]?.bio ?? ''),
           image: resolveImage(
-            STOCK.team[index] ?? STOCK.team[0],
+            STOCK.team[index % STOCK.team.length] ?? STOCK.team[0],
+            member.photo,
             defaults.team.members[index]?.image,
           ),
         }))
-      : [...defaults.team.members]
+        .filter((member) => member.name.length > 0)
+    : []
+  const teamMembers: DentalTeamMember[] =
+    teamFromContent.length > 0 ? teamFromContent : [...defaults.team.members]
 
   // Pas de logos mutuelle dans SiteContent → section masquée tant qu’aucune donnée réelle.
   const brandLogos: string[] = []
@@ -586,7 +586,7 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
     aboutRows,
     team: {
       ...defaults.team,
-      heading: resolveText(content.reviewsHeading, defaults.team.heading),
+      heading: resolveText(content.teamHeading, defaults.team.heading),
       members: teamMembers,
     },
     brand: {
