@@ -7,14 +7,18 @@
       <HeroSection
         v-bind="editableAttrs(props.content._editable?.hero)"
         :hero="page.hero" />
-      <FeaturedSection :featured="page.featured" />
+      <FeaturedSection
+        v-bind="editableAttrs(props.content._editable?.gallery)"
+        :featured="page.featured" />
       <ServicesSection
         v-bind="editableAttrs(props.content._editable?.services)"
         :services="page.services" />
       <AboutSection
         v-bind="editableAttrs(props.content._editable?.about)"
         :rows="page.aboutRows" />
-      <TeamSection :team="page.team" />
+      <TeamSection
+        v-bind="editableAttrs(props.content._editable?.team)"
+        :team="page.team" />
       <BrandSection
         v-if="page.brand.logos.length > 0"
         :brand="page.brand" />
