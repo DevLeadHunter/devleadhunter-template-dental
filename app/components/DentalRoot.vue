@@ -39,6 +39,7 @@
  */
 import type { ComputedRef, PropType } from 'vue'
 import type { SiteContent } from '../types/SiteContent'
+import { editableAttrs } from '@devleadhunter/website-content'
 import { buildDentalContent, type DentalPageContent } from '../types/dental'
 import SiteHeader from './layout/SiteHeader.vue'
 import SiteFooter from './layout/SiteFooter.vue'

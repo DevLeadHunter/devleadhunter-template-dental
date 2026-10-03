@@ -1,6 +1,11 @@
 <template>
   <footer class="dental-footer">
     <div class="dental-footer__inner">
+      <p
+        v-if="page.professionalLicense"
+        class="dental-footer__copy">
+        {{ page.professionalLicense }}
+      </p>
       <p class="dental-footer__copy">{{ page.copyright }}</p>
       <div
         v-if="page.social.length > 0"

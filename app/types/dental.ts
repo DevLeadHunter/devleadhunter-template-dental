@@ -5,6 +5,7 @@
  * Pas de lorem / pas de logos d’assurance factices / réseaux sociaux seulement si fournis.
  */
 import type { SiteContent } from './SiteContent'
+import { professionalLicenseLine } from '@devleadhunter/website-content'
 
 export interface DentalTheme {
   primary: string
@@ -84,6 +85,7 @@ export interface DentalPageContent {
   address: string
   hours: string
   copyright: string
+  professionalLicense: string
   social: DentalSocialLink[]
   hero: {
     eyebrow: string
@@ -558,6 +560,7 @@ export function buildDentalContent(content: SiteContent): DentalPageContent {
     address,
     hours: hoursFromContent ? `Horaires : ${hoursFromContent}` : defaults.hours,
     copyright: `© ${year} ${businessName}. Tous droits réservés.`,
+    professionalLicense: professionalLicenseLine(content),
     social,
     hero: {
       eyebrow: resolveText(content.heroBadge, businessName.toUpperCase()),
